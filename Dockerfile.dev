@@ -1,0 +1,17 @@
+# We use the standard Bun image for development because it has a shell for debugging
+FROM oven/bun:latest
+
+WORKDIR /app
+
+# 1. Install dependencies (Cached layer)
+COPY package.json bun.lockb* ./
+RUN bun install
+
+# 2. Copy the rest of your project
+COPY . .
+
+# 3. Next.js default port
+EXPOSE 3000
+
+# 4. Start the dev server with the Bun runtime
+CMD ["bun", "--bun", "run", "dev"]
